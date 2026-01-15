@@ -1,0 +1,135 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  name        String
+  category    String
+  userBrand   String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  brands       Brand[]
+  prompts      Prompt[]
+  analysisRuns AnalysisRun[]
+}
+
+model Brand {
+  id          String   @id @default(cuid())
+  projectId   String
+  name        String
+  isUserBrand Boolean  @default(false)
+  websiteUrl  String?
+  createdAt   DateTime @default(now())
+
+  project         Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  brandMentions   BrandMention[]
+  metricsSnapshots MetricsSnapshot[]
+
+  @@unique([projectId, name])
+}
+
+model Prompt {
+  id         String   @id @default(cuid())
+  projectId  String
+  text       String
+  intentType String   // commercial, comparison, alternative, specific
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+
+  project       Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  promptResults PromptResult[]
+}
+
+model AnalysisRun {
+  id               String    @id @default(cuid())
+  projectId        String
+  status           String    @default("pending") // pending, processing, completed, failed
+  totalPrompts     Int?
+  processedPrompts Int       @default(0)
+  startedAt        DateTime?
+  completedAt      DateTime?
+  createdAt        DateTime  @default(now())
+
+  project          Project           @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  promptResults    PromptResult[]
+  metricsSnapshots MetricsSnapshot[]
+}
+
+model PromptResult {
+  id              String   @id @default(cuid())
+  analysisRunId   String
+  promptId        String
+  rawResponse     String?
+  responseLength  Int?
+  processingTimeMs Int?
+  error           String?
+  createdAt       DateTime @default(now())
+
+  analysisRun   AnalysisRun    @relation(fields: [analysisRunId], references: [id], onDelete: Cascade)
+  prompt        Prompt         @relation(fields: [promptId], references: [id], onDelete: Cascade)
+  brandMentions BrandMention[]
+  citations     Citation[]
+}
+
+model BrandMention {
+  id             String   @id @default(cuid())
+  promptResultId String
+  brandId        String
+  position       Int?     // 1st, 2nd, 3rd mentioned
+  sentiment      String?  // positive, neutral, negative
+  sentimentScore Float?   // -1.0 to 1.0
+  contextSnippet String?
+  isRecommended  Boolean  @default(false)
+  createdAt      DateTime @default(now())
+
+  promptResult PromptResult @relation(fields: [promptResultId], references: [id], onDelete: Cascade)
+  brand        Brand        @relation(fields: [brandId], references: [id], onDelete: Cascade)
+}
+
+model Citation {
+  id             String   @id @default(cuid())
+  promptResultId String
+  url            String
+  domain         String
+  title          String?
+  createdAt      DateTime @default(now())
+
+  promptResult PromptResult @relation(fields: [promptResultId], references: [id], onDelete: Cascade)
+}
+
+model MetricsSnapshot {
+  id              String @id @default(cuid())
+  analysisRunId   String
+  brandId         String
+
+  // Core metrics
+  visibilityScore   Float?
+  mentionCount      Int      @default(0)
+  citationCount     Int      @default(0)
+  shareOfVoice      Float?
+  averagePosition   Float?
+
+  // Sentiment breakdown
+  positiveMentions  Int      @default(0)
+  neutralMentions   Int      @default(0)
+  negativeMentions  Int      @default(0)
+  averageSentiment  Float?
+
+  // Position metrics
+  recommendationCount Int    @default(0)
+  firstPositionCount  Int    @default(0)
+
+  createdAt DateTime @default(now())
+
+  analysisRun AnalysisRun @relation(fields: [analysisRunId], references: [id], onDelete: Cascade)
+  brand       Brand       @relation(fields: [brandId], references: [id], onDelete: Cascade)
+
+  @@unique([analysisRunId, brandId])
+}

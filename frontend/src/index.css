@@ -1,0 +1,248 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-navy-50: #f0f4f8;
+  --color-navy-100: #d9e2ec;
+  --color-navy-200: #bcccdc;
+  --color-navy-300: #9fb3c8;
+  --color-navy-400: #829ab1;
+  --color-navy-500: #627d98;
+  --color-navy-600: #486581;
+  --color-navy-700: #334e68;
+  --color-navy-800: #243b53;
+  --color-navy-900: #102a43;
+  --color-navy-950: #0a1929;
+
+  --color-electric-400: #60a5fa;
+  --color-electric-500: #3b82f6;
+  --color-electric-600: #2563eb;
+
+  --color-success-400: #4ade80;
+  --color-success-500: #22c55e;
+  --color-warning-400: #fbbf24;
+  --color-warning-500: #f59e0b;
+  --color-danger-400: #f87171;
+  --color-danger-500: #ef4444;
+}
+
+body {
+  background-color: var(--color-navy-950);
+  color: var(--color-navy-100);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--color-navy-900);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-navy-700);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-navy-600);
+}
+
+/* Card styles */
+.card {
+  background-color: rgb(16 42 67 / 0.5);
+  backdrop-filter: blur(4px);
+  border: 1px solid var(--color-navy-800);
+  border-radius: 1rem;
+}
+
+.card-hover {
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.card-hover:hover {
+  border-color: var(--color-navy-700);
+  background-color: rgb(16 42 67 / 0.7);
+}
+
+/* Button styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  border-radius: 0.75rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  background-color: var(--color-electric-500);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-electric-600);
+}
+
+.btn-secondary {
+  background-color: var(--color-navy-800);
+  color: var(--color-navy-100);
+  border: 1px solid var(--color-navy-700);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-navy-700);
+}
+
+.btn-ghost {
+  color: var(--color-navy-300);
+  background: transparent;
+}
+
+.btn-ghost:hover {
+  color: var(--color-navy-100);
+  background-color: rgb(36 59 83 / 0.5);
+}
+
+/* Input styles */
+.input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: var(--color-navy-900);
+  border: 1px solid var(--color-navy-700);
+  border-radius: 0.75rem;
+  color: var(--color-navy-100);
+  transition: all 0.2s;
+}
+
+.input::placeholder {
+  color: var(--color-navy-500);
+}
+
+.input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgb(59 130 246 / 0.5);
+  border-color: var(--color-electric-500);
+}
+
+/* Badge styles */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.625rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.badge-success {
+  background-color: rgb(34 197 94 / 0.2);
+  color: var(--color-success-400);
+}
+
+.badge-warning {
+  background-color: rgb(245 158 11 / 0.2);
+  color: var(--color-warning-400);
+}
+
+.badge-danger {
+  background-color: rgb(239 68 68 / 0.2);
+  color: var(--color-danger-400);
+}
+
+.badge-neutral {
+  background-color: var(--color-navy-700);
+  color: var(--color-navy-300);
+}
+
+/* Table styles */
+.table-container {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  font-size: 0.875rem;
+}
+
+.table th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-navy-400);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: rgb(16 42 67 / 0.5);
+}
+
+.table td {
+  padding: 1rem;
+  border-top: 1px solid var(--color-navy-800);
+}
+
+.table tr:hover td {
+  background-color: rgb(36 59 83 / 0.3);
+}
+
+/* Progress bar */
+.progress-bar {
+  height: 0.5rem;
+  background-color: var(--color-navy-800);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--color-electric-500), var(--color-electric-400));
+  border-radius: 9999px;
+  transition: all 0.5s;
+}
+
+/* Skeleton loading */
+.skeleton {
+  background-color: var(--color-navy-800);
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  border-radius: 0.25rem;
+}
+
+/* Glow effects */
+.glow-blue {
+  box-shadow: 0 0 40px -10px rgba(59, 130, 246, 0.5);
+}
+
+.glow-success {
+  box-shadow: 0 0 40px -10px rgba(34, 197, 94, 0.5);
+}
+
+/* Animation for loading dots */
+@keyframes bounce-dots {
+  0%, 80%, 100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+
+.loading-dot {
+  animation: bounce-dots 1.4s infinite ease-in-out both;
+}
+
+.loading-dot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.loading-dot:nth-child(2) {
+  animation-delay: -0.16s;
+}
