@@ -2,10 +2,6 @@
 
 Track and analyze your brand's visibility across AI-powered search platforms like ChatGPT, Gemini, and Perplexity.
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Node](https://img.shields.io/badge/node-%3E%3D18.0.0-green.svg)
-![React](https://img.shields.io/badge/react-18.3-blue.svg)
-
 ## Overview
 
 As AI-powered search becomes increasingly dominant, understanding how AI models recommend and mention your brand is critical. AI Visibility Tracker helps you:
